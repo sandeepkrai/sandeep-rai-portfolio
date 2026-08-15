@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import {
-  ArrowDown, ArrowUpRight, Award, ExternalLink, Github, Linkedin, Mail, MapPin,
+  ArrowDown, ArrowUpRight, Award, ExternalLink, FileText, Github, Linkedin, Mail, MapPin,
   Menu, Phone, Sparkles, X,
 } from 'lucide-react'
 import {
@@ -130,9 +130,14 @@ export default function ImmersiveApp() {
             <button className={activeSection === chapter.id ? 'active' : ''} type="button" key={chapter.id} onClick={() => navigate(chapter.id)}>{chapter.label}</button>
           ))}
         </nav>
-        <button className="menu-button" type="button" onClick={() => setMenuOpen((open) => !open)} aria-label="Toggle navigation" title="Menu">
-          {menuOpen ? <X size={21} /> : <Menu size={21} />}
-        </button>
+        <div className="header-actions">
+          <a className="resume-link" href="https://drive.google.com/file/d/18Z7c-kTwEUR5Zel1bmq2FtLyd-s9L9J_/view?usp=sharing" target="_blank" rel="noreferrer" aria-label="View Sandeep Kumar Rai's resume" title="View resume">
+            <FileText size={16} /><span>Resume</span><ExternalLink size={13} />
+          </a>
+          <button className="menu-button" type="button" onClick={() => setMenuOpen((open) => !open)} aria-label="Toggle navigation" title="Menu">
+            {menuOpen ? <X size={21} /> : <Menu size={21} />}
+          </button>
+        </div>
       </header>
 
       {menuOpen && (
