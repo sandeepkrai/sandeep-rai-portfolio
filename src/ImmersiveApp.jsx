@@ -6,6 +6,7 @@ import {
 import {
   achievements, education, experiences, impactMetrics, profile, project, skills,
 } from './immersiveData'
+import { initializeAnalytics, trackPortfolioEvent, trackSectionView } from './analytics'
 import './immersive.css'
 
 const chapters = [
@@ -64,7 +65,7 @@ function ExperienceChapter({ experience, onActive }) {
         </div>
         <div className="tag-list">{experience.tags.map((tag) => <span key={tag}>{tag}</span>)}</div>
         {experience.certificate && (
-          <a className="text-link" href={experience.certificate} target="_blank" rel="noreferrer">
+          <a className="text-link" href={experience.certificate} target="_blank" rel="noreferrer" onClick={() => trackPortfolioEvent('certificate_opened', { organization: experience.organization })}>
             View certificate <ExternalLink size={15} />
           </a>
         )}
@@ -79,6 +80,10 @@ export default function ImmersiveApp() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [scrollProgress, setScrollProgress] = useState(0)
   const [pointer, setPointer] = useState({ x: 0, y: 0 })
+
+  useEffect(() => {
+    void initializeAnalytics()
+  }, [])
 
   useEffect(() => {
     const updateScroll = () => {
@@ -103,7 +108,11 @@ export default function ImmersiveApp() {
       const section = document.getElementById(id)
       if (!section) return null
       const observer = new IntersectionObserver(
-        ([entry]) => entry.isIntersecting && setActiveSection(id),
+        ([entry]) => {
+          if (!entry.isIntersecting) return
+          setActiveSection(id)
+          trackSectionView(id)
+        },
         { rootMargin: '-38% 0px -50% 0px', threshold: 0 },
       )
       observer.observe(section)
@@ -131,7 +140,7 @@ export default function ImmersiveApp() {
           ))}
         </nav>
         <div className="header-actions">
-          <a className="resume-link" href="https://drive.google.com/file/d/18Z7c-kTwEUR5Zel1bmq2FtLyd-s9L9J_/view?usp=sharing" target="_blank" rel="noreferrer" aria-label="View Sandeep Kumar Rai's resume" title="View resume">
+          <a className="resume-link" href="https://drive.google.com/file/d/18Z7c-kTwEUR5Zel1bmq2FtLyd-s9L9J_/view?usp=sharing" target="_blank" rel="noreferrer" aria-label="View Sandeep Kumar Rai's resume" title="View resume" onClick={() => trackPortfolioEvent('resume_opened')}>
             <FileText size={16} /><span>Resume</span><ExternalLink size={13} />
           </a>
           <button className="menu-button" type="button" onClick={() => setMenuOpen((open) => !open)} aria-label="Toggle navigation" title="Menu">
@@ -210,7 +219,7 @@ export default function ImmersiveApp() {
             <p>{project.description}</p>
             {project.details.map((detail) => <div className="project-detail" key={detail}><Sparkles size={15} /><span>{detail}</span></div>)}
             <div className="tag-list">{project.tags.map((tag) => <span key={tag}>{tag}</span>)}</div>
-            <a className="primary-link" href={project.link} target="_blank" rel="noreferrer">Explore on GitHub <Github size={18} /></a>
+            <a className="primary-link" href={project.link} target="_blank" rel="noreferrer" onClick={() => trackPortfolioEvent('project_opened')}>Explore on GitHub <Github size={18} /></a>
           </div>
         </div>
       </section>
@@ -233,9 +242,10 @@ export default function ImmersiveApp() {
       <section className="contact-section" id="contact">
         <div className="contact-copy"><p className="eyebrow">OPEN CHANNEL</p><h2>Let’s build systems<br />that <em>hold up.</em></h2><p>Based in Bengaluru and working across distributed systems, cloud infrastructure, and intelligent automation.</p></div>
         <div className="contact-links">
-          <a href={`mailto:${profile.email}`}><Mail size={20} /><span><small>EMAIL</small>{profile.email}</span><ArrowUpRight size={21} /></a>
-          <a href={`tel:${profile.phone.replace(/\s/g, '')}`}><Phone size={20} /><span><small>PHONE</small>{profile.phone}</span><ArrowUpRight size={21} /></a>
-          <a href={profile.linkedin} target="_blank" rel="noreferrer"><Linkedin size={20} /><span><small>LINKEDIN</small>rai-sandeep</span><ArrowUpRight size={21} /></a>
+          <a href={`mailto:${profile.email}`} onClick={() => trackPortfolioEvent('email_clicked')}><Mail size={20} /><span><small>EMAIL</small>{profile.email}</span><ArrowUpRight size={21} /></a>
+          <a href={`tel:${profile.phone.replace(/\s/g, '')}`} onClick={() => trackPortfolioEvent('phone_clicked')}><Phone size={20} /><span><small>PHONE</small>{profile.phone}</span><ArrowUpRight size={21} /></a>
+          <a href={profile.linkedin} target="_blank" rel="noreferrer" onClick={() => trackPortfolioEvent('linkedin_clicked')}><Linkedin size={20} /><span><small>LINKEDIN</small>rai-sandeep</span><ArrowUpRight size={21} /></a>
+          <p className="analytics-disclosure">Anonymous, cookieless usage metrics help improve this portfolio.</p>
         </div>
         <footer><span>© {new Date().getFullYear()} {profile.name}</span><button type="button" onClick={() => navigate('intro')}>Back to index <ArrowDown size={14} /></button></footer>
       </section>

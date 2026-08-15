@@ -16,6 +16,8 @@ param deployerObjectId string
 
 var resourceGroupName = 'rg-sandeep-rai-portfolio-prod-3083'
 var staticWebAppName = 'swa-sandeep-rai-portfolio-prod-3083'
+var logAnalyticsWorkspaceName = 'log-sandeep-rai-portfolio-prod-3083'
+var applicationInsightsName = 'appi-sandeep-rai-portfolio-prod-3083'
 var tags = {
   'app-onboard-skill': 'true'
   'app-onboard-session-id': sessionId
@@ -39,3 +41,19 @@ module staticWebApp './modules/static-web-app.bicep' = {
     tags: tags
   }
 }
+
+module analytics './modules/analytics.bicep' = {
+  name: 'portfolio-analytics'
+  scope: rg
+  params: {
+    location: location
+    workspaceName: logAnalyticsWorkspaceName
+    appInsightsName: applicationInsightsName
+    tags: tags
+  }
+}
+
+output applicationInsightsResourceId string = analytics.outputs.applicationInsightsResourceId
+output applicationInsightsConnectionString string = analytics.outputs.applicationInsightsConnectionString
+output logAnalyticsWorkspaceId string = analytics.outputs.logAnalyticsWorkspaceId
+output analyticsWorkbookId string = analytics.outputs.workbookId
