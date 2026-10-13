@@ -4,3 +4,4 @@ dist
 *.local
 .copilot-azure/
 .azure/
+.playwright-mcp/
