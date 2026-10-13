@@ -41,7 +41,7 @@ export default function WifeyPage() {
       </header>
 
       <section className="wifey-hero" id="khushi" aria-labelledby="khushi-title">
-        <img className="wifey-portrait" src={khushiPortrait} alt="Khushi Rai" fetchPriority="high" width="800" height="800" />
+        <img className="wifey-portrait" src={khushiPortrait} alt="Khushi Rai" fetchPriority="high" width="1145" height="1374" />
         <div className="wifey-hero-shade" />
         <div className="wifey-hero-copy">
           <p className="wifey-kicker">My wife. My love.</p>

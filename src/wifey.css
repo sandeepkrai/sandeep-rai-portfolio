@@ -14,7 +14,7 @@
 .wifey-monogram { display: inline-flex; align-items: center; gap: 10px; font-family: 'Cormorant Garamond', Georgia, serif; font-size: 25px; }
 .wifey-note-link { display: inline-flex; gap: 10px; align-items: center; border-bottom: 1px solid #ffffff66; padding: 6px 0; }
 .wifey-hero { position: relative; isolation: isolate; height: min(880px, 90svh); min-height: 620px; overflow: hidden; color: #fff6f7; background: #472632; }
-.wifey-portrait { position: absolute; z-index: -3; inset: 0 0 0 auto; width: 72%; height: 100%; object-fit: cover; object-position: center 35%; }
+.wifey-portrait { position: absolute; z-index: -3; inset: 0 0 0 auto; width: 72%; height: 100%; object-fit: cover; object-position: center 10%; }
 .wifey-hero-shade { position: absolute; inset: 0; z-index: -2; background: linear-gradient(90deg, #472632 29%, #472632e6 35%, #47263230 58%, transparent 75%), linear-gradient(0deg, #28151d, transparent 36%, transparent 80%, #28151d80); }
 .wifey-hero-copy { position: absolute; left: 9%; top: 50%; transform: translateY(-45%); }
 .wifey-kicker { font-size: 12px; margin: 0 0 22px; }
