@@ -1,0 +1,223 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@400;500;600&family=Noto+Serif+Devanagari:wght@400;500&display=swap');
+
+.invitation-document { background: #e9f1ed; scroll-behavior: smooth; }
+.invitation-document body { margin: 0; }
+.invitation-page { --invite-green: #244f47; --invite-gold: #92713e; --invite-pink: #9b455e; --invite-paper: #edf2e9; color: var(--invite-green); background: var(--invite-paper); font: 400 15px/1.7 'Jost', sans-serif; letter-spacing: 0; overflow-wrap: break-word; }
+.invitation-page *, .invitation-page *::before, .invitation-page *::after { box-sizing: border-box; }
+.invitation-page a { color: inherit; text-decoration: none; }
+.invitation-page button { font: inherit; cursor: pointer; }
+.invitation-page button:disabled { opacity: .5; cursor: progress; }
+.invitation-page :is(a, button):focus-visible { outline: 2px solid currentColor; outline-offset: 6px; }
+.invitation-page :is(h1, h2, h3) { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 400; }
+.invitation-page em { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 400; }
+.invitation-toolbar { position: absolute; z-index: 5; inset: 0 0 auto; min-height: 92px; padding: 0 5%; display: flex; align-items: center; justify-content: space-between; gap: 20px; color: #244f47; }
+.invitation-monogram { font: 500 30px 'Cormorant Garamond', Georgia, serif; }
+.invitation-monogram > span { color: #9b455e; font-style: italic; padding: 0 5px; }
+.invitation-toolbar-date { font-size: 10px; }
+.invitation-tools, .invitation-scene-controls { display: flex; gap: 9px; }
+.invitation-tools button, .invitation-scene-controls button { display: grid; place-items: center; width: 42px; height: 42px; border: 1px solid #244f4738; border-radius: 50%; color: inherit; background: #f4f6eb99; backdrop-filter: blur(8px); transition: background .2s; }
+.invitation-tools button:hover, .invitation-scene-controls button:hover { background: #ffffffdb; }
+.invitation-sheet { margin: 0; }
+.invitation-hero { position: relative; isolation: isolate; height: min(960px, 94svh); min-height: 720px; overflow: hidden; background: #dceee9; }
+.divine-scene { position: absolute; z-index: -2; inset: 0; overflow: hidden; touch-action: pan-y; }
+.divine-scene canvas { display: block; width: 100%; height: 100%; opacity: 0; transition: opacity 1s ease; }
+.divine-scene.scene-ready canvas { opacity: 1; }
+.divine-scene-fallback { position: absolute; right: 12%; top: 14%; height: 66%; width: auto; max-width: 46%; object-fit: contain; }
+.scene-ready .divine-scene-fallback { visibility: hidden; }
+.divine-vignette { position: absolute; z-index: -1; inset: 0; pointer-events: none; background: linear-gradient(90deg, #e6f0eae8, #e6f0eac7 27%, #e6f0ea00 58%), linear-gradient(0deg, #e6f0ea80, transparent 12%); }
+.invitation-hero-copy { position: absolute; top: 50%; left: 8%; width: 38%; transform: translateY(-43%); pointer-events: none; }
+.invitation-hero-copy a { pointer-events: auto; }
+.invitation-mantra { margin: 0 0 28px; color: #955b49; font: 400 20px/1.8 'Noto Serif Devanagari', serif; }
+.invitation-eyebrow { margin: 0 0 20px; font-size: 11px; text-transform: uppercase; }
+.invitation-hero h1 { margin: 0; font-size: 114px; line-height: .88; }
+.invitation-hero h1 > span { display: block; }
+.invitation-hero h1 em { display: block; font-size: 47px; line-height: 1.3; margin-left: 115px; color: var(--invite-pink); }
+.invitation-promise { margin: 25px 0 16px; color: var(--invite-pink); font: italic 25px/1.3 'Cormorant Garamond', Georgia, serif; }
+.invitation-hero-date { display: flex; align-items: center; gap: 12px; font-size: 12px; }
+.invitation-hero-date > span { width: 22px; height: 1px; background: #92713e; }
+.invitation-scroll { display: inline-flex; gap: 22px; align-items: center; border-bottom: 1px solid #244f4766; padding: 10px 0; margin-top: 22px; font-size: 12px; }
+.invitation-scene-controls { position: fixed; z-index: 15; right: 22px; bottom: 22px; color: #244f47; }
+.invitation-hero-footer { position: absolute; bottom: 28px; left: 5%; right: 5%; display: flex; justify-content: space-between; gap: 30px; padding-top: 18px; border-top: 1px solid #244f472c; font-size: 10px; }
+.invitation-dusk .divine-vignette { background: linear-gradient(90deg, #283d4de8, #283d4dad 27%, #283d4d00 58%); }
+.invitation-dusk :is(.invitation-hero-copy, .invitation-toolbar, .invitation-hero-footer, .invitation-scene-controls) { color: #f5ecdd; }
+.invitation-dusk .invitation-hero :is(em, .invitation-promise, .invitation-mantra) { color: #ffc4ce; }
+.invitation-dusk :is(.invitation-tools, .invitation-scene-controls) button { background: #334e58aa; border-color: #e9f1ed77; }
+.invitation-dusk .invitation-scroll, .invitation-dusk .invitation-hero-footer { border-color: #f5ecdd55; }
+.invitation-devotion { position: relative; display: grid; grid-template-columns: 1fr 1.2fr; align-items: center; gap: 10%; padding: 140px max(8%, calc((100% - 1160px) / 2)); overflow: hidden; background: linear-gradient(90deg, #f7eff2d9, #f7eff280); }
+.devotion-art { position: relative; width: 100%; max-width: 430px; justify-self: center; perspective: 900px; }
+.devotion-art img { display: block; width: 100%; height: auto; border-radius: 4px; box-shadow: 0 28px 45px -28px #3d354a99; }
+.devotion-art-border { position: absolute; inset: -14px; border: 1px solid #ad8b53a6; border-radius: 4px; }
+.devotion-art-border::before { content: ''; position: absolute; inset: -9px; border: 1px solid #ad8b5340; border-radius: inherit; }
+.devotion-flower { position: absolute; bottom: -36px; right: -32px; color: #9b455e; background: #f0ebe6; border-radius: 50%; padding: 6px; }
+.devotion-copy { max-width: 560px; }
+.devotion-copy .invitation-eyebrow { color: #926c3b; }
+.devotion-copy h2 { margin: 0 0 30px; font-size: 60px; line-height: 1.06; }
+.devotion-copy h2 em { color: var(--invite-pink); }
+.invitation-ornament { display: flex; align-items: center; gap: 15px; color: #a48650; }
+.invitation-ornament > span { width: 58px; height: 1px; background: #a4865080; }
+.devotion-copy > p:not(.invitation-eyebrow) { color: #647269; font-size: 14px; margin-top: 27px; }
+.devotion-copy strong { font-weight: 500; color: #244f47; }
+.devotion-signature { display: block; margin-top: 28px; color: var(--invite-pink); font: italic 30px 'Cormorant Garamond', Georgia, serif; }
+.invitation-celebration { position: relative; padding: 110px max(8%, calc((100% - 1160px) / 2)); text-align: center; scroll-margin-top: 20px; background: linear-gradient(90deg, #e6efebde, #e6efeb80); }
+.celebration-heading .invitation-eyebrow { color: #667f70; }
+.celebration-heading h2 { margin: 0; font-size: 66px; line-height: 1.1; }
+.celebration-heading h2 em { color: #9b455e; }
+.celebration-layout { display: grid; grid-template-columns: 1fr 1fr; margin-top: 55px; padding-top: 50px; border-top: 1px solid #244f4730; }
+.celebration-day { padding: 0 40px 0 0; }
+.invitation-date { display: grid; grid-template-columns: 1fr; gap: 0; align-items: center; justify-content: center; }
+.invitation-date > span { font: 400 23px/1.2 'Cormorant Garamond', Georgia, serif; }
+.invitation-date > span:first-child { font: 11px 'Jost', sans-serif; text-transform: uppercase; }
+.invitation-date strong { font: 400 138px/1.1 'Cormorant Garamond', Georgia, serif; }
+.invitation-date small { display: inline-block; font: 13px 'Jost', sans-serif; margin-top: 8px; }
+.date-dedication { margin: 25px 0; color: #697e71; font: italic 22px/1.3 'Cormorant Garamond', Georgia, serif; }
+.invitation-calendar { display: inline-flex; align-items: center; gap: 10px; font-size: 12px; border-bottom: 1px solid #244f4760; padding-bottom: 7px; }
+.celebration-venue { display: flex; align-items: center; flex-direction: column; justify-content: center; border-left: 1px solid #244f4730; padding: 25px 0 25px 40px; }
+.celebration-venue > svg { color: #a48650; }
+.invitation-at { margin: 25px 0 12px; color: #667f70; }
+.celebration-venue h3 { margin: 0; max-width: 400px; font-size: 49px; line-height: 1.1; }
+.invitation-city { display: flex; align-items: center; justify-content: center; gap: 7px; font-size: 14px; margin: 22px 0 6px; }
+.invitation-location-note { margin: 0; color: var(--invite-pink); font: italic 23px 'Cormorant Garamond', Georgia, serif; }
+.invitation-actions { display: flex; justify-content: center; gap: 14px; margin-top: 30px; }
+.invitation-actions > a { display: inline-flex; align-items: center; gap: 10px; min-height: 46px; padding: 10px 19px; font-size: 12px; background: #244f47; color: #edf2e9; }
+.invitation-actions > a:hover { background: #386a5e; }
+.invitation-closing { position: relative; padding: 100px 24px; text-align: center; background: linear-gradient(90deg, #743a50ed, #743a50c9); color: #fff1eb; }
+.invitation-closing > svg { color: #edc7a3; }
+.invitation-closing p { font: italic 45px/1.2 'Cormorant Garamond', Georgia, serif; margin: 24px 0; }
+.invitation-closing > span { display: block; font-size: 12px; color: #f1d6d5; }
+.invitation-closing > strong { display: block; margin: 28px 0; font: 400 23px 'Cormorant Garamond', Georgia, serif; }
+.invitation-closing .invitation-ornament { justify-content: center; color: #edc7a3; }
+.invitation-footer { padding: 30px 6%; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px; color: #5b7264; background: #edf2e9; font-size: 10px; }
+.invitation-footer > span > span { margin: 0 8px; }
+.invitation-footer button { display: flex; align-items: center; gap: 9px; color: #244f47; border: 0; border-bottom: 1px solid #244f4760; padding: 8px 0; background: none; font-size: 12px; }
+.invitation-footer > a { display: flex; align-items: center; justify-content: center; gap: 5px; width: 100%; font-size: 9px; }
+.invitation-art-credit { width: 100%; text-align: center; font-size: 10px; padding: 0 90px 20px; }
+.invitation-art-credit a { text-decoration: underline; text-underline-offset: 3px; }
+.invitation-journey { position: relative; isolation: isolate; background: #e4e9e6; }
+.invitation-backdrop-shell { position: sticky; top: 0; height: 100svh; margin-bottom: -100svh; z-index: -1; overflow: hidden; pointer-events: none; }
+.invitation-backdrop { position: absolute; inset: 0; }
+.invitation-backdrop canvas { display: block; width: 100%; height: 100%; }
+.backdrop-ready .trishul-fallback { display: none; }
+.trishul-fallback { position: absolute; top: 17%; right: 17%; height: 70%; width: 5px; background: #ab874e28; transform: rotate(-9deg); }
+.trishul-fallback::before { content: ''; position: absolute; width: 120px; height: 130px; left: -60px; top: 15px; border: 5px solid #ab874e28; border-top: 0; border-radius: 0 0 60% 60%; }
+.trishul-fallback span { position: absolute; top: -28px; left: -10px; width: 0; height: 0; border-left: 12px solid transparent; border-right: 12px solid transparent; border-bottom: 42px solid #ab874e28; }
+.invitation-dusk .invitation-journey { background: #d3dce3; }
+.invitation-dusk .invitation-devotion { background: linear-gradient(90deg, #e8e1edd9, #e8e1ed66); }
+.invitation-dusk .invitation-celebration { background: linear-gradient(90deg, #dce7e5e6, #dce7e577); }
+@media (prefers-reduced-motion: no-preference) {
+  .invitation-reveal.is-visible { animation: invitation-unfold 1.1s cubic-bezier(.2,.65,.3,1) both; }
+  .devotion-art img { animation: invitation-art-float 8s ease-in-out infinite; }
+  .devotion-art-border { animation: invitation-frame-float 8s ease-in-out infinite; }
+  .devotion-flower, .invitation-ornament > svg, .invitation-closing > svg, .celebration-venue > svg { animation: invitation-flower-turn 32s linear infinite; }
+  .invitation-ornament > span { animation: invitation-line-breathe 4s ease-in-out infinite alternate; transform-origin: center; }
+  .invitation-date strong { background: linear-gradient(110deg, #244f47 30%, #a88249 48%, #244f47 65%); background-size: 250% 100%; background-clip: text; color: transparent; animation: invitation-gold-pass 9s ease-in-out infinite; }
+  .invitation-scroll > svg { animation: invitation-arrow-drift 2.8s ease-in-out infinite; }
+}
+@keyframes invitation-unfold { from { opacity: .15; transform: translateY(34px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes invitation-art-float { 0%, 100% { transform: translateY(0) rotateY(-3deg); } 50% { transform: translateY(-12px) rotateY(3deg); } }
+@keyframes invitation-frame-float { 0%, 100% { transform: translateY(3px) rotate(-1deg); } 50% { transform: translateY(-6px) rotate(1deg); } }
+@keyframes invitation-flower-turn { to { transform: rotate(360deg); } }
+@keyframes invitation-line-breathe { from { transform: scaleX(.65); opacity: .5; } to { transform: scaleX(1); opacity: 1; } }
+@keyframes invitation-gold-pass { 0%, 100% { background-position: 100% 0; } 50% { background-position: 0 0; } }
+@keyframes invitation-arrow-drift { 0%, 100% { transform: translateY(-3px); } 50% { transform: translateY(4px); } }
+.invitation-paused *, .invitation-paused *::before, .invitation-paused *::after { animation-play-state: paused !important; }
+.invitation-share-status { position: fixed; z-index: 20; bottom: 20px; left: 50%; transform: translateX(-50%); max-width: calc(100% - 32px); }
+.invitation-share-status:not(:empty) { display: flex; align-items: center; gap: 10px; padding: 14px 20px; background: #244f47; color: #fff; border: 1px solid #c5a773; border-radius: 4px; font-size: 12px; box-shadow: 0 5px 25px #0002; }
+@media (prefers-reduced-motion: no-preference) { .invitation-hero-copy { animation: invitation-arrive 1.1s ease both; } }
+@keyframes invitation-arrive { from { opacity: 0; translate: 0 15px; } to { opacity: 1; translate: 0 0; } }
+@media (max-width: 1100px) {
+  .invitation-hero-copy { left: 6%; }
+  .invitation-hero h1 { font-size: 88px; }
+  .devotion-copy h2 { font-size: 49px; }
+  .invitation-devotion { gap: 10%; }
+}
+@media (max-width: 759px) {
+  .invitation-toolbar { min-height: 72px; padding: 0 6%; }
+  .invitation-monogram { font-size: 25px; }
+  .invitation-toolbar-date { display: none; }
+  .invitation-hero { height: 94svh; min-height: 740px; max-height: 1000px; }
+  .divine-scene { height: 64%; }
+  .divine-scene-fallback { height: 76%; top: 13%; right: 50%; translate: 50% 0; max-width: 55%; }
+  .divine-vignette { background: linear-gradient(0deg, #e6f0ea 0%, #e6f0ea 30%, #e6f0ea00 50%); }
+  .invitation-hero-copy { top: auto; bottom: 83px; left: 6%; width: 88%; transform: none; text-align: center; }
+  .invitation-mantra { margin-bottom: 10px; font-size: 17px; }
+  .invitation-hero-copy .invitation-eyebrow { font-size: 9px; margin-bottom: 14px; }
+  .invitation-hero h1 { display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 51px; line-height: 1; }
+  .invitation-hero h1 em { font-size: 30px; margin: 0; }
+  .invitation-promise { font-size: 22px; margin: 16px 0 10px; }
+  .invitation-hero-date { justify-content: center; font-size: 11px; }
+  .invitation-scroll { margin-top: 9px; padding: 7px 0; font-size: 11px; }
+  .invitation-scene-controls { top: auto; right: 14px; bottom: 16px; flex-direction: row; }
+  .invitation-scene-controls button { width: 42px; height: 42px; }
+  .invitation-hero-footer { bottom: 20px; left: 6%; right: 6%; font-size: 9px; gap: 20px; }
+  .invitation-hero-footer span { max-width: 48%; }
+  .invitation-hero-footer span:last-child { text-align: right; }
+  .invitation-dusk .invitation-hero { background: #536779; }
+  .invitation-dusk .divine-vignette { background: linear-gradient(0deg, #283d4d 0%, #283d4d 30%, #283d4d00 50%); }
+  .invitation-devotion { grid-template-columns: 1fr; gap: 65px; padding: 75px 8% 65px; }
+  .devotion-art { max-width: 340px; }
+  .devotion-copy { text-align: center; max-width: 450px; margin: auto; }
+  .devotion-copy h2 { font-size: 42px; }
+  .devotion-copy .invitation-ornament { justify-content: center; }
+  .invitation-celebration { padding: 60px 8%; }
+  .celebration-heading h2 { font-size: 49px; }
+  .celebration-layout { grid-template-columns: 1fr; padding-top: 35px; margin-top: 35px; }
+  .celebration-day { padding: 0 0 40px; }
+  .invitation-date { grid-template-columns: 1fr auto 1fr; gap: 20px; }
+  .invitation-date strong { font-size: 90px; }
+  .invitation-date > span { font-size: 20px; }
+  .invitation-date > span:first-child { text-align: right; font-size: 10px; }
+  .invitation-date > span:last-child { text-align: left; }
+  .celebration-venue { padding: 40px 0 0; border-left: 0; border-top: 1px solid #244f4730; }
+  .celebration-venue h3 { font-size: 44px; }
+  .invitation-closing { padding: 60px 7%; }
+  .invitation-closing p { font-size: 35px; }
+}
+@media (max-width: 360px) { .invitation-hero h1 { font-size: 43px; gap: 8px; } .invitation-hero h1 em { font-size: 25px; } .invitation-promise { font-size: 20px; } .devotion-copy h2 { font-size: 36px; } .invitation-date { gap: 12px; } }
+@media (max-height: 650px) and (min-width: 760px) { .invitation-hero { min-height: 580px; } .invitation-hero-copy { top: 48%; } .invitation-hero h1 { font-size: 72px; } .invitation-mantra { margin-bottom: 12px; } .invitation-promise { margin-top: 12px; } .invitation-scroll { margin-top: 8px; } }
+@media (prefers-reduced-motion: reduce) { .invitation-document { scroll-behavior: auto; } .invitation-page *, .invitation-page *::before, .invitation-page *::after { animation: none !important; transition: none !important; } }
+@media print {
+  @page { size: A5 portrait; margin: 6mm; }
+  .invitation-backdrop-shell { display: none !important; }
+  .invitation-page *, .invitation-page *::before, .invitation-page *::after { animation: none !important; }
+  .invitation-reveal { opacity: 1 !important; transform: none !important; }
+  .invitation-date strong { background: none; color: #244f47; }
+  .invitation-page { background: white; color: #244f47; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+  .invitation-toolbar, .divine-scene, .divine-vignette, .invitation-scene-controls, .invitation-scroll, .invitation-hero-footer, .invitation-actions, .invitation-calendar, .invitation-footer, .invitation-share-status { display: none !important; }
+  .invitation-hero { height: auto; min-height: 0; background: white !important; padding: 12px 0; }
+  .invitation-hero-copy { position: static; width: auto; transform: none; text-align: center; color: #244f47 !important; }
+  .invitation-mantra { font-size: 12px; margin: 0 0 6px; }
+  .invitation-hero-copy .invitation-eyebrow { font-size: 8px; margin: 5px 0; }
+  .invitation-hero h1 { display: flex; justify-content: center; align-items: center; gap: 10px; font-size: 39px; }
+  .invitation-hero h1 em { margin: 0; font-size: 25px; }
+  .invitation-promise { margin: 9px 0; font-size: 17px; }
+  .invitation-hero-date { justify-content: center; font-size: 10px; }
+  .invitation-devotion { display: grid; grid-template-columns: 95px 1fr; gap: 25px; padding: 20px; }
+  .devotion-art { width: 85px; }
+  .devotion-art-border { inset: -5px; }
+  .devotion-art-border::before, .devotion-flower, .devotion-copy > p:not(.invitation-eyebrow), .devotion-signature { display: none; }
+  .devotion-copy { text-align: left; }
+  .devotion-copy .invitation-eyebrow { font-size: 8px; margin-bottom: 10px; }
+  .devotion-copy h2 { font-size: 27px; margin-bottom: 15px; }
+  .invitation-celebration { padding: 20px 15px; }
+  .celebration-heading .invitation-eyebrow { margin-bottom: 5px; font-size: 8px; }
+  .celebration-heading h2 { font-size: 29px; }
+  .celebration-layout { grid-template-columns: 1fr 1fr; padding-top: 15px; margin-top: 15px; }
+  .celebration-day { padding: 0 15px 0 0; }
+  .invitation-date { display: flex; flex-direction: column; gap: 3px; }
+  .invitation-date strong { font-size: 64px; }
+  .invitation-date > span { font-size: 17px; text-align: center !important; }
+  .invitation-date small { font-size: 10px; }
+  .date-dedication { font-size: 15px; margin: 10px 0 0; }
+  .celebration-venue { padding: 0 0 0 15px; border-left: 1px solid #244f4730; border-top: 0; }
+  .celebration-venue > svg { width: 22px; }
+  .invitation-at { font-size: 8px; margin: 10px 0; }
+  .celebration-venue h3 { font-size: 28px; }
+  .invitation-city { font-size: 11px; margin: 10px 0 3px; }
+  .invitation-location-note { font-size: 17px; }
+  .invitation-closing { padding: 18px 10px; }
+  .invitation-closing > svg { width: 20px; height: 20px; }
+  .invitation-closing p { font-size: 23px; margin: 9px 0; }
+  .invitation-closing > span { font-size: 9px; }
+  .invitation-closing > strong { font-size: 18px; margin: 12px 0; }
+  .invitation-closing .invitation-ornament { display: none; }
+}

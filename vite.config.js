@@ -8,6 +8,7 @@ export default defineConfig({
       input: {
         portfolio: 'index.html',
         wifey: 'wifey/index.html',
+        invitation: 'invitation/index.html',
       },
     },
   },
