@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom/client'
 const isWifeyPage = /^\/wifey(?:\/|\/index\.html)?$/.test(window.location.pathname)
 const isInvitationPage = /^\/invitation(?:\/|\/index\.html)?$/.test(window.location.pathname)
 const loadPage = isInvitationPage
-  ? () => import('./InvitationPage')
+  ? () => import('./invitation/Shivoham')
   : isWifeyPage ? () => import('./WifeyPage') : () => import('./ImmersiveApp')
 const Page = React.lazy(loadPage)
 

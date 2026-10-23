@@ -2,6 +2,10 @@
 
 An immersive, responsive engineering portfolio built with React and Vite.
 
+## SHIVOHAM Wedding Invitation
+
+The cinematic TypeScript invitation lives at `/invitation/`. See [its setup and content guide](invitation/README.md) for configuration, RSVP backend integration, audio/assets, accessibility, and static deployment instructions. Use Node 22 LTS and run `npm run typecheck`, `npm run test:invitation`, `npm run lint`, and `npm run build` before publishing.
+
 ## Local development
 
 ```powershell
