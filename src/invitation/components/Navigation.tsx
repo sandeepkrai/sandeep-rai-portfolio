@@ -28,12 +28,24 @@ export default function Navigation({ paused, onPause, reduced }: { paused: boole
     document.addEventListener('keydown', escape)
     return () => document.removeEventListener('keydown', escape)
   }, [open])
+  useEffect(() => {
+    const player = audio.current
+    if (!player || !audioSource) return
+    let cancelled = false
+    player.volume = 0.15
+    void player.play().catch((error: unknown) => {
+      if (!cancelled && !(error instanceof DOMException && ['NotAllowedError', 'AbortError'].includes(error.name))) {
+        setAudioError('Audio is unavailable. You can enjoy the invitation without sound.')
+      }
+    })
+    return () => { cancelled = true; player.pause() }
+  }, [audioSource])
   async function toggleAudio() {
-    if (!audio.current) return
+    const player = audio.current
+    if (!player) return
     try {
-      if (playing) audio.current.pause()
-      else { audio.current.volume = 0.25; await audio.current.play() }
-      setPlaying(!playing)
+      if (!player.paused) player.pause()
+      else { player.volume = 0.15; await player.play() }
       setAudioError('')
     } catch { setAudioError('Audio is unavailable. You can enjoy the invitation without sound.'); setPlaying(false) }
   }
@@ -43,7 +55,7 @@ export default function Navigation({ paused, onPause, reduced }: { paused: boole
       <a className="sh-brand" href="#home" aria-label="Shivoham home"><span lang="sa">ॐ</span><span>SHIVOHAM<small>A celebration in Kashi</small></span></a>
       <nav className="sh-desktop-nav" aria-label="Main navigation">{links.map(([id, label]) => <a key={id} href={`#${id}`} aria-current={active === id ? 'location' : undefined}>{label}</a>)}</nav>
       <div className="flex items-center gap-2">
-        {audioSource && <><audio ref={audio} src={audioSource} preload="none" loop onError={() => { setPlaying(false); setAudioError('Audio is unavailable.') }} /><button className="sh-icon-button" onClick={toggleAudio} aria-label={playing ? 'Mute ambient sound' : 'Play ambient sound'} title={wedding.audio.title || 'Ambient sound'}>{playing ? <Volume2 size={18} /> : <VolumeX size={18} />}</button></>}
+        {audioSource && <><audio ref={audio} src={audioSource} preload="metadata" loop onPlaying={() => { setPlaying(true); setAudioError('') }} onPause={() => setPlaying(false)} onError={() => { setPlaying(false); setAudioError('Audio is unavailable.') }} /><button className="sh-icon-button" onClick={toggleAudio} aria-label={playing ? 'Mute ambient sound' : 'Play ambient sound'} title={`${playing ? 'Mute' : 'Play'}: ${wedding.audio.title || 'Ambient sound'}`}>{playing ? <Volume2 size={18} /> : <VolumeX size={18} />}</button></>}
         <button className="sh-icon-button" onClick={onPause} disabled={reduced} aria-label={reduced ? 'Reduced motion enabled' : paused ? 'Play animations' : 'Pause animations'} title={reduced ? 'Reduced motion enabled' : paused ? 'Play animations' : 'Pause animations'} aria-pressed={paused || reduced}>{paused || reduced ? <Play size={17} /> : <Pause size={17} />}</button>
         <button ref={menuButton} className="sh-icon-button sh-menu-toggle" aria-label={open ? 'Close navigation' : 'Open navigation'} aria-expanded={open} aria-controls="sh-mobile-menu" onClick={() => setOpen(!open)}>{open ? <X size={20} /> : <Menu size={20} />}</button>
       </div>

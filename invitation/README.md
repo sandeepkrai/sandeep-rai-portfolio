@@ -33,7 +33,7 @@ Edit `src/config/wedding.ts`. The confirmed names, date, and venue are configure
 - `venue.travel`, `dressCode`, `messages.family`, `families`, `contacts`, `rsvpDeadline`: optional; empty items do not create filler sections.
 - `schedule`: optional named events with local ISO dates, times, and venues. Uses the same timezone as the main ceremony.
 - `messages`: invitation text in English and Hindi.
-- `audio.src`: optional root-relative path to a recording you have permission to use, e.g. `/audio/river.mp3`; place the real file in `public/audio/` first. `audio.title` names it. Without a path, no audio control is shown. Playback requires a user click, starts at low volume, and handles unavailable recordings. No recording is bundled.
+- `audio.src`: root-relative path to a recording you have permission to use. The supplied recording is converted to MP3 for browser compatibility and bundled at `/audio/wedding-background.mp3`; `audio.title` names it. Playback is attempted on page load at 15% volume and loops. Browsers may block audible autoplay; the sound button starts playback in that case and can pause it at any time. Without a path, no audio control is shown. Missing recordings are handled gracefully. Some mobile browsers control volume through the device rather than JavaScript.
 
 Update the generic title/description in `invitation/index.html` if you want personalized link previews. `noindex, nofollow` is intentional; it is not access control.
 
