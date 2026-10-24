@@ -35,6 +35,8 @@ Edit `src/config/wedding.ts`. The confirmed names, date, and venue are configure
 - `messages`: invitation text in English and Hindi.
 - `audio.src`: root-relative path to a recording you have permission to use. The supplied recording is converted to MP3 for browser compatibility and bundled at `/audio/wedding-background.mp3`; `audio.title` names it. Playback is attempted on page load at 15% volume and loops. Browsers may block audible autoplay; the sound button starts playback in that case and can pause it at any time. Without a path, no audio control is shown. Missing recordings are handled gracefully. Some mobile browsers control volume through the device rather than JavaScript.
 
+If autoplay is blocked, clicking **Enter Kashi** also starts the music at 15% volume. Entering does not restart playing music or override an explicit mute choice.
+
 Update the generic title/description in `invitation/index.html` if you want personalized link previews. `noindex, nofollow` is intentional; it is not access control.
 
 ## RSVP Backend Contract

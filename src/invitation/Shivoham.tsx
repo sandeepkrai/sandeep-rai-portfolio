@@ -5,7 +5,7 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { DateTime } from 'luxon'
 import { wedding } from '../config/wedding'
-import Navigation from './components/Navigation'
+import Navigation, { type NavigationHandle } from './components/Navigation'
 import InvitationReveal from './components/InvitationReveal'
 import { Venue, WeddingDetails } from './components/EventDetails'
 import Rsvp from './components/Rsvp'
@@ -17,6 +17,7 @@ gsap.registerPlugin(ScrollTrigger)
 
 export default function Shivoham() {
   const root = useRef<HTMLDivElement>(null)
+  const navigation = useRef<NavigationHandle>(null)
   const [paused, setPaused] = useState(false)
   const [entering, setEntering] = useState(false)
   const reduced = useReducedMotion()
@@ -39,12 +40,13 @@ export default function Shivoham() {
     return () => context.revert()
   }, [paused, reduced])
   function enterKashi() {
+    navigation.current?.startAudio()
     if (reduced || paused) document.getElementById('kashi')?.scrollIntoView({ behavior: 'instant' })
     else setEntering(true)
   }
   return <MotionConfig reducedMotion={reduced || paused ? 'always' : 'never'}>
     <div ref={root} className={`shivoham ${paused ? 'sh-paused' : ''}`}>
-      <Navigation paused={paused} onPause={() => setPaused(!paused)} reduced={reduced} />
+      <Navigation ref={navigation} paused={paused} onPause={() => setPaused(!paused)} reduced={reduced} />
       <AnimatePresence>{entering && <motion.div className="sh-entry-veil" aria-hidden="true" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.45 }} onAnimationComplete={() => { document.getElementById('kashi')?.scrollIntoView({ behavior: 'instant' }); setEntering(false) }}><span lang="sa">ॐ</span></motion.div>}</AnimatePresence>
       <main>
         <section id="home" tabIndex={-1} className="sh-hero" aria-labelledby="sh-title">

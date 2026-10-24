@@ -1,16 +1,19 @@
-import { useEffect, useRef, useState } from 'react'
+import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Menu, Pause, Play, Volume2, VolumeX, X } from 'lucide-react'
 import { wedding } from '../../config/wedding'
 
 const links = [['home', 'Home'], ['our-invitation', 'Our invitation'], ['wedding-details', 'Wedding details'], ['venue', 'Venue'], ['rsvp', 'RSVP']]
 
-export default function Navigation({ paused, onPause, reduced }: { paused: boolean; onPause: () => void; reduced: boolean }) {
+export interface NavigationHandle { startAudio: () => void }
+
+const Navigation = forwardRef<NavigationHandle, { paused: boolean; onPause: () => void; reduced: boolean }>(function Navigation({ paused, onPause, reduced }, ref) {
   const [open, setOpen] = useState(false)
   const [active, setActive] = useState('home')
   const [playing, setPlaying] = useState(false)
   const [audioError, setAudioError] = useState('')
   const audio = useRef<HTMLAudioElement>(null)
+  const mutedByUser = useRef(false)
   const menuButton = useRef<HTMLButtonElement>(null)
   const audioSource = wedding.audio.src.startsWith('/') && !wedding.audio.src.startsWith('//') ? wedding.audio.src : ''
   useEffect(() => {
@@ -40,10 +43,21 @@ export default function Navigation({ paused, onPause, reduced }: { paused: boole
     })
     return () => { cancelled = true; player.pause() }
   }, [audioSource])
+  function startAudio() {
+    const player = audio.current
+    if (!player || !player.paused || mutedByUser.current) return
+    player.volume = 0.15
+    void player.play().catch(() => {
+      setAudioError('Audio is unavailable. You can enjoy the invitation without sound.')
+      setPlaying(false)
+    })
+  }
+  useImperativeHandle(ref, () => ({ startAudio }))
   async function toggleAudio() {
     const player = audio.current
     if (!player) return
     try {
+      mutedByUser.current = !player.paused
       if (!player.paused) player.pause()
       else { player.volume = 0.15; await player.play() }
       setAudioError('')
@@ -63,4 +77,6 @@ export default function Navigation({ paused, onPause, reduced }: { paused: boole
     <AnimatePresence>{open && <motion.nav id="sh-mobile-menu" className="sh-mobile-nav" aria-label="Mobile navigation" initial={{ opacity: reduced ? 1 : 0, y: reduced ? 0 : -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: reduced ? 0 : 0.2 }}>{links.map(([id, label]) => <a key={id} href={`#${id}`} aria-current={active === id ? 'location' : undefined} onClick={() => { setOpen(false); document.getElementById(id)?.focus({ preventScroll: true }) }}>{label}</a>)}</motion.nav>}</AnimatePresence>
     {audioError && <p className="sh-toast" role="status">{audioError}</p>}
   </>
-}
+})
+
+export default Navigation
