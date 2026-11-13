@@ -1,0 +1,29 @@
+{
+  "routes": [
+    {
+      "route": "/invitation/index.html",
+      "allowedRoles": ["anonymous"]
+    },
+    {
+      "route": "/assets/*",
+      "allowedRoles": ["anonymous"]
+    },
+    {
+      "route": "/audio/*",
+      "allowedRoles": ["anonymous"]
+    },
+    {
+      "route": "/invitation-mark.svg",
+      "allowedRoles": ["anonymous"]
+    },
+    {
+      "route": "/*",
+      "methods": ["GET", "HEAD"],
+      "redirect": "/invitation/",
+      "statusCode": 302,
+      "headers": {
+        "Cache-Control": "no-store"
+      }
+    }
+  ]
+}
