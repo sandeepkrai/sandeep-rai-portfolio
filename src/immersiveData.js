@@ -19,13 +19,8 @@ export const experiences = [
   {
     id: 'microsoft-sde', index: '01', organization: 'Microsoft', role: 'Software Development Engineer',
     period: 'July 2025 — Present', location: 'Onsite · Bengaluru', theme: 'signal', accent: '#5fe0c3',
-    lead: 'Making complex production systems observable, explainable, and easier to operate.',
-    points: [
-      'Designed and implemented an end-to-end observability system with 5 telemetry and alerting components across 3+ repositories.',
-      'Reduced production debugging time from hours to minutes, approximately a 10x improvement, while enabling proactive issue detection before customer escalation.',
-      'Led a team-wide AI tooling adoption initiative with M3-level engagement.',
-      'Built an end-to-end automation system that reduced monthly team reporting from about 12 hours to 30–40 minutes by removing manual collection and analysis.',
-    ],
+    lead: 'Currently building here',
+    points: [],
     tags: ['.NET', 'Azure', 'Observability', 'Agentic automation'],
   },
   {
