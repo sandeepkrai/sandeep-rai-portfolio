@@ -14,6 +14,7 @@ export interface WeddingConfig {
   venue: { name: string; address: string; mapUrl: string; travel: string }
   dressCode: string
   rsvpDeadline: string
+  rsvpEmail: string
   contacts: { name: string; phone: string }[]
   schedule: WeddingEvent[]
   audio: { src: string; title: string }
@@ -29,6 +30,7 @@ export const wedding: WeddingConfig = {
   venue: { name: 'Haveli Seva Kunj', address: 'Haveli Seva Kunj, Mavaia, Varanasi', mapUrl: 'https://maps.app.goo.gl/D7AqdVHwo6Zeno4s7', travel: '' },
   dressCode: '',
   rsvpDeadline: '',
+  rsvpEmail: 'srai15032001@gmail.com',
   contacts: [],
   schedule: [],
   audio: { src: '/audio/wedding-background.mp3', title: 'Wedding background music' },

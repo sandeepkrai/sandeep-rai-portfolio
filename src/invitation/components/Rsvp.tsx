@@ -2,9 +2,13 @@ import { useEffect, useRef, useState, type FormEvent } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Check, CheckCircle2, LoaderCircle, Send, X } from 'lucide-react'
 import { safeLink, validateRsvp, type RsvpPayload } from '../event'
+import { wedding } from '../../config/wedding'
 
 const configuredEndpoint = (import.meta.env.VITE_RSVP_ENDPOINT || '').trim()
-const endpoint = /^\/(?!\/)/.test(configuredEndpoint) ? configuredEndpoint : safeLink(configuredEndpoint)
+const endpoint = configuredEndpoint
+  ? /^\/(?!\/)/.test(configuredEndpoint) ? configuredEndpoint : safeLink(configuredEndpoint)
+  : wedding.rsvpEmail ? `https://formsubmit.co/ajax/${encodeURIComponent(wedding.rsvpEmail)}` : null
+const usesFormSubmit = !!endpoint?.startsWith('https://formsubmit.co/ajax/')
 
 export default function Rsvp({ reduced }: { reduced: boolean }) {
   const [attendance, setAttendance] = useState<'accept' | 'decline'>('accept')
@@ -22,6 +26,7 @@ export default function Rsvp({ reduced }: { reduced: boolean }) {
     if (pending.current || status === 'success') return
     const form = event.currentTarget
     const data = new FormData(form)
+    if (data.get('_honey')) return
     const payload: RsvpPayload = {
       name: String(data.get('guestName') || '').trim(), attendance,
       attendees: attendance === 'decline' ? 0 : Number(data.get('attendees')),
@@ -47,10 +52,25 @@ export default function Rsvp({ reduced }: { reduced: boolean }) {
     controller.current = new AbortController()
     const timeout = setTimeout(() => controller.current?.abort(), 15000)
     try {
-      const response = await fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Idempotency-Key': request.current.key }, body, signal: controller.current.signal })
+      const headers: Record<string, string> = { 'Content-Type': 'application/json', Accept: 'application/json' }
+      if (!usesFormSubmit) headers['Idempotency-Key'] = request.current.key
+      const submission = usesFormSubmit ? JSON.stringify({
+        ...payload,
+        _subject: `Wedding RSVP - ${wedding.partners.join(' & ')}`,
+        _template: 'table',
+        _honey: '',
+        submission_id: request.current.key,
+      }) : body
+      const response = await fetch(endpoint, { method: 'POST', headers, body: submission, signal: controller.current.signal })
       if (!response.ok) throw new Error('The RSVP service could not accept your response. Please try again.')
       const result: unknown = await response.json()
-      if (!result || typeof result !== 'object' || !('accepted' in result) || result.accepted !== true) throw new Error('We could not confirm receipt. Please try again or contact the hosts.')
+      if (usesFormSubmit && result && typeof result === 'object' && 'message' in result && typeof result.message === 'string' && /activat|confirm your email/i.test(result.message)) {
+        throw new Error('RSVP email delivery is awaiting activation by the hosts. Please try again later.')
+      }
+      const accepted = result && typeof result === 'object' && (usesFormSubmit
+        ? 'success' in result && (result.success === true || result.success === 'true')
+        : 'accepted' in result && result.accepted === true)
+      if (!accepted) throw new Error('We could not confirm receipt. Please try again or contact the hosts.')
       if (mounted.current) setStatus('success')
     } catch (error) {
       if (mounted.current) {
@@ -66,9 +86,10 @@ export default function Rsvp({ reduced }: { reduced: boolean }) {
 
   return <AnimatePresence mode="wait">
     {status === 'success' ? <motion.div key="confirmation" className="sh-rsvp-confirmation" role="status" initial={{ opacity: reduced ? 1 : 0 }} animate={{ opacity: 1 }}>
-      <CheckCircle2 size={36} strokeWidth={1} /><h3>Your response has been received.</h3><p>{attendance === 'accept' ? 'We look forward to celebrating with you.' : 'Thank you for sending your love and letting us know.'}</p>
+      <CheckCircle2 size={36} strokeWidth={1} /><h3>{usesFormSubmit ? 'Your RSVP has been submitted.' : 'Your response has been received.'}</h3><p>{usesFormSubmit ? 'The email service has accepted your response for processing.' : attendance === 'accept' ? 'We look forward to celebrating with you.' : 'Thank you for sending your love and letting us know.'}</p>
     </motion.div> : <motion.form key="form" onSubmit={submit} noValidate className="sh-rsvp-form" initial={false}>
       {!endpoint && <p className="sh-form-note">RSVP preview · Responses are not being collected yet.</p>}
+      {usesFormSubmit && <><input type="text" name="_honey" tabIndex={-1} autoComplete="off" aria-hidden="true" style={{ display: 'none' }} /><p className="sh-form-note">Your RSVP details are processed by <a href="https://formsubmit.co/privacy.pdf" target="_blank" rel="noopener noreferrer">FormSubmit</a> and emailed to the hosts.</p></>}
       <fieldset disabled={status === 'sending'}><legend className="sh-small-label">Will you join us?</legend><div className="sh-attendance">
         {(['accept', 'decline'] as const).map(value => <label key={value} className={attendance === value ? 'selected' : ''}><input type="radio" name="attendance" value={value} checked={attendance === value} onChange={() => setAttendance(value)} />{value === 'accept' ? <Check size={16} /> : <X size={16} />}<span>{value === 'accept' ? 'Joyfully accept' : 'Regretfully decline'}</span></label>)}
       </div></fieldset>
