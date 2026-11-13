@@ -61,7 +61,7 @@ export default function Rsvp({ reduced }: { reduced: boolean }) {
         _honey: '',
         submission_id: request.current.key,
       }) : body
-      const response = await fetch(endpoint, { method: 'POST', headers, body: submission, signal: controller.current.signal })
+      const response = await fetch(endpoint, { method: 'POST', headers, body: submission, signal: controller.current.signal, referrerPolicy: usesFormSubmit ? 'origin' : undefined })
       if (!response.ok) throw new Error('The RSVP service could not accept your response. Please try again.')
       const result: unknown = await response.json()
       if (usesFormSubmit && result && typeof result === 'object' && 'message' in result && typeof result.message === 'string' && /activat|confirm your email/i.test(result.message)) {
