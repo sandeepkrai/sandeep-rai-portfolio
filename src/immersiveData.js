@@ -9,9 +9,6 @@ export const profile = {
 }
 
 export const impactMetrics = [
-  { value: '10x', label: 'faster production debugging' },
-  { value: '12h → 40m', label: 'monthly reporting automated' },
-  { value: '5x', label: 'faster on-call investigation' },
   { value: '4K', label: 'daily customers supported' },
 ]
 
